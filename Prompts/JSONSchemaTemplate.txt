@@ -1,0 +1,97 @@
+<prompt>
+  <purpose>
+    Generate a JSON schema (compatible with OpenAI’s “Structured Outputs” subset) that the language model will use to format its final answer for a specific step/task. The schema must include all required fields, disallow unknown properties, and reflect the step’s goals and requirements from the workflow context.
+  </purpose>
+
+  <instructions>
+    1. Gather all fields the step/task must output.
+    2. Ensure every field is required or use a union with null for truly optional fields.
+    3. Keep the root schema as an object (no top-level anyOf).
+    4. Set "additionalProperties": false for every object.
+    5. Use only supported JSON Schema keywords.
+    6. Adhere to the limits on nesting, enum sizes, and total string length as outlined below.
+    7. You MUST return only the valid JSON schema.
+  </instructions>
+
+  <OutputFormat>
+    Supported schema features for Structured Outputs:
+    - Supported types: string, number, boolean, integer, object, array, enum, anyOf
+    - The root of the schema must be an object (no top-level anyOf).
+    - All fields must be required. You may simulate optional fields with type: ["string", "null"] (or similar).
+    - "additionalProperties": false must be set in every object.
+    - Up to 5 levels of nesting, 100 object properties total, 500 total enum values, and 15,000 total characters in property/definition names and enum values.
+    - Key ordering in the schema will determine the order of generated fields.
+    - Some keywords (e.g., minLength, maxLength, pattern, contains) are not supported. Any usage of them will fail on strict mode.
+    - Definitions ($defs) are allowed for reusability. Recursive schemas are supported using $ref to refer back to the root or a subschema.
+  </OutputFormat>
+
+  <exampleOutput>
+    {
+      "name": "create_user_profile",
+      "description": "JSON schema for the final output of the CreateUserProfile step",
+      "strict": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The unique identifier for the user"
+          },
+          "age": {
+            "type": "integer",
+            "description": "The age of the user in years"
+          },
+          "email": {
+            "type": "string",
+            "description": "The user's email address"
+          },
+          "is_active": {
+            "type": "boolean",
+            "description": "Indicates whether the user's profile is active"
+          },
+          "preferences": {
+            "type": "object",
+            "description": "User's preferences settings",
+            "properties": {
+              "newsletter_subscribed": {
+                "type": "boolean",
+                "description": "Whether the user is subscribed to the newsletter"
+              },
+              "theme": {
+                "type": "string",
+                "description": "Preferred theme for the user interface",
+                "enum": ["light", "dark", "system"]
+              }
+            },
+            "required": [
+              "newsletter_subscribed",
+              "theme"
+            ],
+            "additionalProperties": false
+          },
+          "roles": {
+            "type": "array",
+            "description": "List of roles assigned to the user",
+            "items": {
+              "type": "string"
+            }
+          },
+          "signup_date": {
+            "type": "string",
+            "description": "The date the user signed up, in YYYY-MM-DD format"
+          }
+        },
+        "required": [
+          "username",
+          "age",
+          "email",
+          "is_active",
+          "preferences",
+          "roles",
+          "signup_date"
+        ],
+        "additionalProperties": false
+      }
+    }
+  </exampleOutput>
+</prompt>

@@ -1,0 +1,29 @@
+Create a system prompt that instructs a language model to accomplish the specific step described by the provided step description, docstring, and workflow context. The prompt must reflect expertise in the domain of the step, encourage thorough reasoning prior to final conclusions, and preserve any original user content or guidelines.
+
+Incorporate these considerations: • Understand the Task: Focus on the current step’s goals, requirements, and constraints.
+• Expert Reasoning: Guide the language model to think like a domain expert, explicitly prioritizing reasoning steps before giving final results.
+• Minimal Changes / Enhancement: If the user provides an existing prompt or guidelines, preserve them as much as possible. Clarify only where necessary.
+• Preserve User Content: Keep any original content, details, or examples intact. If necessary, break vague sections into sub-steps to maintain clarity.
+• Examples: Include high-quality examples, using [placeholders] for complex elements. Ensure that any reasoning sections appear before conclusions in each example.
+• Clarity and Conciseness: Use precise, direct language. Omit superfluous instructions.
+• Formatting: Use markdown for structure and readability, but do not enclose output in code blocks unless explicitly stated.
+• Constants: Integrate any consistent guidelines or rubrics as immutable parts of the prompt to guard against prompt injection.
+• Output Format: Favor structured data (e.g., JSON) if the step’s deliverable is well-defined. Clearly specify expected length, style, and syntax.
+
+Steps (optional)
+[If needed, outline specific steps for the language model to follow when generating its response. Emphasize reasoning order—reasoning before final conclusions.]
+
+Output Format
+[Explain exactly how the final output should be formatted—e.g., plain text, short paragraph, JSON, markdown list—and whether it should follow a particular structure or length requirement. If JSON is used, do not wrap it in code fences unless requested.]
+
+Examples (optional)
+[Provide 1–3 concise example prompts and responses, demonstrating correct ordering of reasoning before conclusions. Use placeholders like [EXAMPLE_INPUT] and [EXAMPLE_OUTPUT] if the content is especially long or domain-specific. (Real examples may be longer or more detailed.)]
+
+Notes (optional)
+[Include any edge cases or special considerations related to the step’s domain. Repeat important constraints or references here to ensure completeness.]
+
+
+
+
+
+
